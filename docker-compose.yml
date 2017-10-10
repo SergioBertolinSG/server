@@ -2,7 +2,8 @@ version: '3'
 
 services:
   owncloud:
-    image: owncloud/server:${VERSION}
+    #image: owncloud/server:${VERSION}
+    image: owncloudserver:latest
     restart: always
     ports:
       - ${HTTPS_PORT}:443
@@ -21,6 +22,7 @@ services:
       - OWNCLOUD_ADMIN_PASSWORD=${ADMIN_PASSWORD}
       - OWNCLOUD_REDIS_ENABLED=true
       - OWNCLOUD_REDIS_HOST=redis
+      - OWNCLOUD_TARBALL=http://download.owncloud.org/community/owncloud-daily-master-qa.tar.bz2
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:80/status.php"]
       interval: 30s

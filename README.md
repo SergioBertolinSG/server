@@ -1,3 +1,22 @@
+EDITION:
+
+To use this docker-compose structure we need to build the image of the server including the tests:
+
+docker build -t owncloudserver:latest --build-arg OWNCLOUD_TARBALL=http://download.owncloud.org/community/owncloud-daily-master-qa.tar.bz2 \
+--build-arg LDAP_TARBALL=https://github.com/owncloud/user_ldap/archive/master.zip --no-cache . 
+
+And then start run the containers:
+
+docker-compose up -d
+
+Please note that currently user_ldap is not included.
+
+
+
+
+
+### This comes from owncloud-docker/server: #####
+
 # ownCloud: Server
 
 [![](https://images.microbadger.com/badges/image/owncloud/server.svg)](https://microbadger.com/images/owncloud/server "Get your own image badge on microbadger.com")

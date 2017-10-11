@@ -27,3 +27,11 @@ LABEL org.label-schema.vcs-url="https://github.com/owncloud-docker/server.git"
 LABEL org.label-schema.name="ownCloud Server"
 LABEL org.label-schema.vendor="ownCloud GmbH"
 LABEL org.label-schema.schema-version="1.0"
+
+RUN chmod +x /var/www/owncloud/lib/composer/behat/behat/bin/behat
+RUN chmod +x /var/www/owncloud/tests/integration/run.sh
+#RUN ln -s ${OWNCLOUD_VOLUME_FILES} /var/www/owncloud/data
+RUN ln -s /mnt/data/files /var/www/owncloud/data
+
+#Include some tools
+RUN apt-get update -q && apt-get install -y sudo vim

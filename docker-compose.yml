@@ -23,6 +23,7 @@ services:
       - OWNCLOUD_REDIS_ENABLED=true
       - OWNCLOUD_REDIS_HOST=redis
       - OWNCLOUD_TARBALL=http://download.owncloud.org/community/owncloud-daily-master-qa.tar.bz2
+      #- OWNCLOUD_UTF8MB4_ENABLED=true
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:80/status.php"]
       interval: 30s

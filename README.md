@@ -2,17 +2,43 @@ EDITION:
 
 To use this docker-compose structure we need to build the image of the server including the tests:
 
+````bash
 docker build -t owncloudserver:latest --build-arg OWNCLOUD_TARBALL=http://download.owncloud.org/community/owncloud-daily-master-qa.tar.bz2 \
---build-arg LDAP_TARBALL=https://github.com/owncloud/user_ldap/archive/master.zip --no-cache . 
+--build-arg LDAP_TARBALL=https://github.com/owncloud/user_ldap/releases/download/0.9.1/user_ldap.tar.gz --no-cache . 
+```
 
 And then start run the containers:
 
+```bash
 docker-compose up -d
+```
 
-Please note that currently user_ldap is not included.
+To run the integration tests from core just do:
+
+```bash
+docker exec -t server_owncloud_1 /bin/sh -c "cd tests/integration && sudo -u www-data ./run.sh"
+```
+
+Have in mind that there are some failing tests in this setup:
+
+````bash
+/var/www/owncloud/tests/integration/features/tags.feature:17
+/var/www/owncloud/tests/integration/features/tags.feature:53
+```
+These are failing because mariadb cannot be set up to support emojis, the required variable is commented in the docker-compose file as it fails.
 
 
-
+```bash
+/var/www/owncloud/tests/integration/features/webdav-related-new-endpoint.feature:150
+/var/www/owncloud/tests/integration/features/webdav-related-new-endpoint.feature:159
+/var/www/owncloud/tests/integration/features/webdav-related-new-endpoint.feature:177
+/var/www/owncloud/tests/integration/features/webdav-related-new-endpoint.feature:187
+/var/www/owncloud/tests/integration/features/webdav-related-old-endpoint.feature:150
+/var/www/owncloud/tests/integration/features/webdav-related-old-endpoint.feature:159
+/var/www/owncloud/tests/integration/features/webdav-related-old-endpoint.feature:177
+/var/www/owncloud/tests/integration/features/webdav-related-old-endpoint.feature:187
+```
+These may fail because a little discrepancy in the quota makes them fail. So we'll have to make it exactly the same as in core's jenkins right now.
 
 
 ### This comes from owncloud-docker/server: #####
